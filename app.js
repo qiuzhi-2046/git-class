@@ -33,11 +33,11 @@ const art={
   history:'<g fill="'+cream+'"><path d="m-56 18 69-19 45 16-68 22z"/><path d="m-56 6 69-20 45 16-68 22z"/><path d="m-56-7 69-19 45 16-68 22z" fill="'+orange+'"/></g><path d="m-24-8 29-8m-19 13 29-8" fill="none"/>',
   laptop:'<path d="m-49-34 79-7 5 61-79 7z" fill="#536960"/><path d="m-43-28 67-6 4 47-67 6z" fill="#c1dbc9"/><path d="m-44 27 79-7 22 13-81 9-23-12z" fill="#eff0da"/><path d="m-25-3 7 5-6 7m13 0 15-2" fill="none"/>',
   cloud:'<path d="M-36 23c-25-1-26-34-4-40 1-16 20-25 34-17 16-22 46-12 47 9 24-1 31 34 6 39z" fill="#8bb49b"/><path d="M-39 16c-25-1-26-34-4-40 1-16 20-25 34-17 16-22 46-12 47 9 24-1 31 34 6 39z" fill="#e8f1dc"/><path d="m-17-8 11 10 20-23" fill="none"/>',
-  fork:'<path d="M-48 24h98M-39 24c31 0 20-52 53-52h26" fill="none" stroke-width="5"/><g fill="'+cream+'"><circle cx="-40" cy="24" r="9"/><circle cx="42" cy="24" r="9"/></g><circle cx="39" cy="-28" r="10" fill="'+orange+'"/>',
+  fork:'<path d="M-48 24h98M-39 24c31 0 20-52 53-52h26" stroke="var(--diagram-label)" fill="none" stroke-width="5"/><g fill="'+cream+'"><circle cx="-40" cy="24" r="9"/><circle cx="42" cy="24" r="9"/></g><circle cx="39" cy="-28" r="10" fill="'+orange+'"/>',
   review:'<rect x="-45" y="-36" width="90" height="65" rx="7" fill="#d1e6cf"/><path d="M-45-18h90"/><circle cx="-35" cy="-27" r="2" fill="'+ink+'"/><path d="M-29-27h7m-7 24 5 5 9-11m10 6h23m-47 15h44" fill="none"/>'
 };
 art.trayFull=art.tray.replace('<path d="m-57','<path d="m-27 7 4-38 44-6 9 40z" fill="'+cream+'"/><path d="m-14-20 25-4m-25 12 23-3" fill="none"/><path d="m-57');
-art.pointer='<path d="M-44 2h88" fill="none"/><circle r="14" fill="'+orange+'"/><circle r="4" fill="'+ink+'"/>';
+art.pointer='<path d="M-44 2h88" stroke="var(--diagram-label)" fill="none"/><circle r="14" fill="'+orange+'"/><circle r="4" fill="'+ink+'"/>';
 art.emptyBranch='<circle r="14" fill="none" stroke-dasharray="4 5" stroke="#7c9384"/>';
 art.emptyReview='<rect x="-43" y="-29" width="86" height="58" rx="7" fill="none" stroke="#7c9384" stroke-dasharray="5 5"/>';
 art.oneVersion='<path d="m-56 6 69-20 45 16-68 22z" fill="'+cream+'"/>';
@@ -51,8 +51,8 @@ function diagram(l,done){
   if(l.key==='commit' && !done)right='oneVersion';
   if(done && l.key==='add')right='trayFull';
   const labels=done?l.after:l.before;
-  const side=(x,type,i)=>'<g transform="translate('+x+' 70)" stroke="'+ink+'" stroke-width="2.7" stroke-linejoin="round" stroke-linecap="round"><ellipse cy="38" rx="63" ry="7" fill="#d2dfd2" stroke="none"/>'+art[type]+'</g><text x="'+x+'" y="138" font-size="18" font-weight="700">'+l.labels[i]+'</text><text x="'+x+'" y="161" font-size="14" fill="#4b5e53">'+labels[i]+'</text>';
-  return '<svg class="diagram" viewBox="0 0 580 176" role="img" aria-label="'+l.labels[0]+'，'+labels[0]+'。'+l.labels[1]+'，'+labels[1]+'。" fill="'+ink+'" text-anchor="middle">'+side(152,left,0)+'<path d="M230 71h117m-9-8 9 8-9 8" stroke="'+(done?'#457853':'#718679')+'" fill="none" stroke-width="2.4" stroke-dasharray="5 5"/><rect x="270" y="52" width="38" height="37" rx="18" fill="'+(done?'#d6ecd9':'#f7faf4')+'" stroke="#8fa798"/>'+ (done?'<path d="m280 70 6 6 11-13" fill="none" stroke="#345d41" stroke-width="3"/>':'<text x="289" y="78" font-size="22" font-weight="680">?</text>')+'<g class="'+(done?'after':'')+'">'+side(428,right,1)+'</g></svg>'
+  const side=(x,type,i)=>'<g transform="translate('+x+' 70)" stroke="'+ink+'" stroke-width="2.7" stroke-linejoin="round" stroke-linecap="round"><ellipse cy="38" rx="63" ry="7" fill="#0f2022" stroke="none"/>'+art[type]+'</g><text x="'+x+'" y="138" font-size="18" font-weight="700">'+l.labels[i]+'</text><text x="'+x+'" y="161" font-size="14" fill="var(--diagram-label)">'+labels[i]+'</text>';
+  return '<svg class="diagram" viewBox="0 0 580 176" role="img" aria-label="'+l.labels[0]+'，'+labels[0]+'。'+l.labels[1]+'，'+labels[1]+'。" fill="var(--ink)" text-anchor="middle">'+side(152,left,0)+'<path d="M230 71h117m-9-8 9 8-9 8" stroke="'+(done?'var(--mint)':'#93b2aa')+'" fill="none" stroke-width="2.4" stroke-dasharray="5 5"/><rect x="270" y="52" width="38" height="37" rx="18" fill="'+(done?'var(--success)':'var(--diagram-bg)')+'" stroke="#8fa798"/>'+ (done?'<path d="m280 70 6 6 11-13" fill="none" stroke="var(--mint)" stroke-width="3"/>':'<text x="289" y="78" font-size="22" font-weight="680">?</text>')+'<g class="'+(done?'after':'')+'">'+side(428,right,1)+'</g></svg>'
 }
 const storageKey='branch-lab.practice.v1';
 let progress={current:0,completed:[]};
